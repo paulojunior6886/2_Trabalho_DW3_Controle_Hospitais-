@@ -1,0 +1,106 @@
+
+{% extends "layout.njk" %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <h3>
+        {% if operacao == 'novo' %}
+            Cadastrar médico
+        {% elif operacao == 'editar' %}
+            Editar médico
+        {% else %}
+            Visualizar médico
+        {% endif %}
+    </h3>
+
+    <p class="text-subtitle text-muted">
+        Dados do profissional.
+    </p>
+
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <div id="mensagemMedico"
+             class="alert alert-danger d-none">
+        </div>
+
+        <form id="formMedico"
+              data-id="{{ id }}"
+              data-operacao="{{ operacao }}">
+
+            <div class="row g-3">
+
+                <div class="col-md-2">
+                    <label for="idMedico" class="form-label">
+                        ID
+                    </label>
+
+                    <input id="idMedico"
+                           class="form-control"
+                           readonly>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">
+                        Nome
+                    </label>
+
+                    <input id="nome"
+                           class="form-control"
+                           maxlength="100"
+                           required>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="crm" class="form-label">
+                        CRM
+                    </label>
+
+                    <input id="crm"
+                           class="form-control"
+                           maxlength="30"
+                           required>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="especialidade" class="form-label">
+                        Especialidade
+                    </label>
+
+                    <input id="especialidade"
+                           class="form-control"
+                           maxlength="100"
+                           required>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+
+                <button id="salvarMedico"
+                        type="submit"
+                        class="btn btn-primary">
+                    Salvar
+                </button>
+
+                <a href="/medicos"
+                   class="btn btn-secondary ms-2">
+                    Voltar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/apps/medicos/vwMedicos.js"></script>
+{% endblock %}
