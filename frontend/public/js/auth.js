@@ -45,3 +45,32 @@ function realizarLogout() {
   limparAutenticacao();
   window.location.replace("/login");
 }
+
+// Realiza chamadas à API autenticada com o JWT
+async function Api(caminho, opcoes = {}) {
+  const backendUrl =
+    document.body.dataset.api || "http://localhost:40000";
+
+  const headers = montarHeadersAutenticacao({
+    ...(opcoes.headers || {}),
+  });
+
+  const resposta = await fetch(backendUrl + caminho, {
+    ...opcoes,
+    headers: headers,
+  });
+
+  const dados = await resposta.json().catch(() => ({}));
+
+  if (dados.auth === false) {
+    limparAutenticacao();
+    window.location.replace("/login");
+    throw new Error(dados.message || "Sessão expirada.");
+  }
+
+  if (!resposta.ok || dados.status === "erro") {
+    throw new Error(dados.mensagem || dados.message || "Erro na operação.");
+  }
+
+  return dados;
+}
