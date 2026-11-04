@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>{{ title or "MedControl" }} - MedControl</title>
+
+    <link rel="stylesheet"
+          href="/assets/compiled/css/app.css">
+
+    <link rel="stylesheet"
+          href="/assets/compiled/css/app-dark.css">
+
+    <link rel="stylesheet"
+          href="/css/hospital.css">
+</head>
+
+<body data-api="{{ backendUrl }}">
+
+<script src="/assets/static/js/initTheme.js"></script>
+
+<div id="app">
+
+    <div id="sidebar">
+        <div class="sidebar-wrapper active">
+
+            <div class="sidebar-header position-relative">
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div class="logo">
+                        <a href="/home" class="logo-hospital">
+                            <i class="bi bi-hospital"></i>
+                            Med<span>Control</span>
+                        </a>
+                    </div>
+
+                    <div class="theme-toggle d-flex gap-1 flex-shrink-0">
+                        <i class="bi bi-sun-fill"></i>
+
+                        <div class="form-check form-switch m-0 p-0">
+                            <input
+                                class="form-check-input m-0 p-0"
+                                type="checkbox"
+                                id="toggle-dark">
+                        </div>
+
+                        <i class="bi bi-moon-fill"></i>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+                <ul class="menu">
+
+                    <li class="sidebar-title">Hospital</li>
+
+                    <li class="sidebar-item {% if activeMenu == 'home' %}active{% endif %}">
+                        <a href="/home" class="sidebar-link">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Visão geral</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item {% if activeMenu == 'medicos' %}active{% endif %}">
+                        <a href="/medicos" class="sidebar-link">
+                            <i class="bi bi-person-badge-fill"></i>
+                            <span>Médicos</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item {% if activeMenu == 'consultas' %}active{% endif %}">
+                        <a href="/consultas" class="sidebar-link">
+                            <i class="bi bi-calendar2-check-fill"></i>
+                            <span>Consultas</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-title">Conta</li>
+
+                    <li class="sidebar-item">
+                        <a href="#"
+                           onclick="realizarLogout(); return false;"
+                           class="sidebar-link">
+
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Sair</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="main">
+
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer class="mt-5">
+            <div class="footer clearfix mb-0">
+                HospitalERP — Desenvolvimento Web III
+            </div>
+        </footer>
+
+    </div>
+
+</div>
+
+<script src="/assets/static/js/components/dark.js"></script>
+<script src="/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="/assets/compiled/js/app.js"></script>
+<script src="/js/auth.js"></script>
+
+<script>
+    verificarAutenticacao();
+</script>
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

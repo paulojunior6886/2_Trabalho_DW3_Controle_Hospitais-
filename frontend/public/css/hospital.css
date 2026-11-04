@@ -1,6 +1,8 @@
 /* Cores do sistema hospitalar */
-:root {
+:root,
+html[data-bs-theme="dark"] {
   --bs-primary: #167a73;
+  --bs-primary-rgb: 22, 122, 115;
 }
 
 .logo-hospital {

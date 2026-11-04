@@ -1,0 +1,61 @@
+
+{% extends "layout.njk" %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <h3>Painel Hospitalar</h3>
+
+    <p class="text-subtitle text-muted">
+        Gerenciamento das atividades do hospital
+    </p>
+
+</div>
+
+<section class="section">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body p-4">
+
+                    <h4>Médicos</h4>
+
+                    <p>
+                        Cadastre e consulte os profissionais.
+                    </p>
+
+                    <a href="/medicos" class="btn btn-primary">
+                        Gerenciar médicos
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body p-4">
+
+                    <h4>Consultas</h4>
+
+                    <p>
+                        Controle agendamentos, datas e valores.
+                    </p>
+
+                    <a href="/consultas"
+                       class="btn btn-outline-primary">
+                        Gerenciar consultas
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
