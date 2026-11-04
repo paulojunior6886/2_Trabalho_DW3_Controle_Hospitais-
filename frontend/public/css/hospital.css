@@ -1,0 +1,38 @@
+/* Cores do sistema hospitalar */
+:root {
+  --bs-primary: #167a73;
+}
+
+.logo-hospital {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #277c86;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo-hospital span {
+  color: #e24e5a;
+}
+
+#sidebar .sidebar-item.active > .sidebar-link {
+  background: #167a73;
+}
+
+.btn-primary {
+  background-color: #167a73;
+  border-color: #167a73;
+}
+
+.btn-primary:hover {
+  background-color: #10635d;
+  border-color: #10635d;
+}
+
+.page-heading {
+  margin-bottom: 22px;
+}
+
+.card {
+  border-radius: 12px;
+}
