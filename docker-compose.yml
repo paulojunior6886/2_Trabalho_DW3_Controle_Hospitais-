@@ -9,9 +9,51 @@ services:
     restart: always
     volumes:
       - postgres_hospital_data:/var/lib/postgresql/data
+      - ./backend/databaseConfig.sql:/docker-entrypoint-initdb.d/01_databaseConfig.sql:ro
     ports:
       - "$DB_FORWARD_PORT:${DB_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
+    networks:
+      - hospital_network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    restart: unless-stopped
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: postgres_hospital
+      DB_PORT: "5432"
+      DB_FORWARD_PORT: "5432"
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "40000:40000"
+    depends_on:
+      postgres_hospital:
+        condition: service_healthy
+    networks:
+      - hospital_network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    restart: unless-stopped
+    environment:
+      FRONTEND_PORT: "40100"
+      PUBLIC_API_URL: "http://localhost:40000"
+    ports:
+      - "40100:40100"
+    depends_on:
+      - backend
     networks:
       - hospital_network
 
@@ -67,4 +109,4 @@ configs:
       }
   pgadmin_pass:
     content: |
-      hospital_postgres:${DB_PORT}:${DB_NAME}:${DB_USER}:${DB_PASSWORD}
+      postgres_hospital:${DB_PORT}:${DB_NAME}:${DB_USER}:${DB_PASSWORD}
