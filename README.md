@@ -5,8 +5,6 @@
 - Bruno de Morais Euzébio
 - Leonardo Teixeira Silva
 
-# HospitalERP — Trabalho 2 de Desenvolvimento Web III
-
 Base didática adaptada da arquitetura que o grupo utilizou no CoopFinance. Duas tabelas relacionadas em 1:N (médicos e consultas), 5 APIs JWT para cada uma, frontend Express + Nunjucks + template Mazer, Postgres, pgAdmin, quatro serviços Docker Compose.
 
 ## Primeira execução
