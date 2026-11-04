@@ -1,0 +1,115 @@
+
+### Login - executar primeiro
+# @name login
+POST http://localhost:40000/Login
+Content-Type: application/json
+
+{
+    "username": "user1",
+    "password": "1234"
+}
+
+###
+
+@token = {{login.response.body.$.token}}
+
+### Cadastrar médico
+POST http://localhost:40000/insertMedico
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "nome": "Ana Silva",
+    "crm": "CRM-SP-12345",
+    "especialidade": "Clínica médica"
+}
+
+###
+
+### Listar médicos
+GET http://localhost:40000/getAllMedicos
+Authorization: Bearer {{token}}
+
+###
+
+### Buscar médico por ID
+GET http://localhost:40000/getMedicoByID/1
+Authorization: Bearer {{token}}
+
+###
+
+### Atualizar médico
+PUT http://localhost:40000/updateMedico/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "nome": "Ana Silva",
+    "crm": "CRM-SP-12345",
+    "especialidade": "Cardiologia"
+}
+
+###
+
+### Cadastrar consulta
+POST http://localhost:40000/insertConsulta
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "paciente_nome": "João Pereira",
+    "data_consulta": "2026-11-04",
+    "valor": 180.50,
+    "realizada": false,
+    "medico_id": 1
+}
+
+###
+
+### Listar consultas
+GET http://localhost:40000/getAllConsultas
+Authorization: Bearer {{token}}
+
+###
+
+### Buscar consulta por ID
+GET http://localhost:40000/getConsultaByID/1
+Authorization: Bearer {{token}}
+
+###
+
+### Atualizar consulta
+PUT http://localhost:40000/updateConsulta/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "paciente_nome": "João Pereira",
+    "data_consulta": "2026-11-05",
+    "valor": 200,
+    "realizada": true,
+    "medico_id": 1
+}
+
+###
+
+### Teste de ID inválido - esperado: 400
+GET http://localhost:40000/getMedicoByID/abc
+Authorization: Bearer {{token}}
+
+###
+
+### Teste sem JWT - esperado: 401
+GET http://localhost:40000/getAllConsultas
+
+###
+
+### Excluir consulta logicamente
+DELETE http://localhost:40000/deleteConsulta/1
+Authorization: Bearer {{token}}
+
+###
+
+### Excluir médico logicamente
+DELETE http://localhost:40000/deleteMedico/1
+Authorization: Bearer {{token}}
