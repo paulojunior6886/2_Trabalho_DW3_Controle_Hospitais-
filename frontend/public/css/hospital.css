@@ -1,40 +1,83 @@
-/* Cores do sistema hospitalar */
+/* Cores principais */
 :root,
-html[data-bs-theme="dark"] {
-  --bs-primary: #167a73;
-  --bs-primary-rgb: 22, 122, 115;
+[data-bs-theme="dark"] {
+  --bs-primary: #13877d;
+  --bs-primary-rgb: 19, 135, 125;
 }
 
+/* Botões principais */
+.btn-primary {
+  --bs-btn-bg: #13877d;
+  --bs-btn-border-color: #13877d;
+  --bs-btn-hover-bg: #106b63;
+  --bs-btn-hover-border-color: #106b63;
+  --bs-btn-active-bg: #0d5852;
+  --bs-btn-active-border-color: #0d5852;
+}
+
+/* Botões secundários */
+.btn-outline-primary {
+  --bs-btn-color: #13877d;
+  --bs-btn-border-color: #13877d;
+  --bs-btn-hover-bg: #13877d;
+  --bs-btn-hover-border-color: #13877d;
+}
+
+/* Menu lateral */
+#sidebar .sidebar-item.active > .sidebar-link {
+  background: #13877d;
+  color: #fff;
+}
+
+/* Identidade */
 .logo-hospital {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #277c86;
+  color: #13877d;
   text-decoration: none;
-  white-space: nowrap;
 }
 
 .logo-hospital span {
-  color: #e24e5a;
+  color: #d95763;
 }
 
-#sidebar .sidebar-item.active > .sidebar-link {
-  background: #167a73;
-}
-
-.btn-primary {
-  background-color: #167a73;
-  border-color: #167a73;
-}
-
-.btn-primary:hover {
-  background-color: #10635d;
-  border-color: #10635d;
-}
-
-.page-heading {
-  margin-bottom: 22px;
-}
-
+/* Cartões */
 .card {
-  border-radius: 12px;
+  border-radius: 14px;
+}
+
+/* Campos */
+.form-control:focus,
+.form-select:focus {
+  border-color: #13877d;
+  box-shadow: 0 0 0 0.2rem rgba(19, 135, 125, 0.15);
+}
+
+/* Login hospitalar */
+body.hospital-login {
+  background: #f3f8f7 !important;
+  color: #183d45 !important;
+}
+
+.hospital-login .card {
+  background: #fff !important;
+  border: 1px solid #dbe9e7;
+  border-top: 5px solid #13877d;
+  box-shadow: 0 16px 45px rgba(24, 61, 69, 0.1);
+}
+
+.hospital-login h2 {
+  color: #13877d;
+  font-weight: 800;
+}
+
+.hospital-login .text-muted,
+.hospital-login .form-label {
+  color: #45666b !important;
+}
+
+.hospital-login .form-control {
+  background: #fff !important;
+  color: #183d45 !important;
+  border-color: #ccdfdc !important;
 }

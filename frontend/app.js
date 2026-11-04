@@ -2,55 +2,108 @@ const express = require("express");
 const nunjucks = require("nunjucks");
 const path = require("path");
 
-// Carrega as configurações do arquivo .env
 require("dotenv").config({
-  path: path.resolve(__dirname, "../.env"),
+    path: path.resolve(__dirname, "../.env")
 });
 
-// Cria o servidor Express do Front-End
 const app = express();
 
-// Configura a Porta do servidor e endereço da API Back-End
-const port = process.env.FRONTEND_PORT || 40100;
-const servidorDw3 = process.env.SERVIDOR_DW3 || "http://localhost:40000";
+const port = Number(
+    process.env.FRONTEND_PORT || 40100
+);
 
-// Configuração do Nunjucks
+const backendUrl =
+    process.env.PUBLIC_API_URL ||
+    "http://localhost:40000";
+
+// Configuração das páginas Nunjucks.
 app.set("views", path.join(__dirname, "view"));
 app.set("view engine", "njk");
 
-nunjucks.configure(path.join(__dirname, "view"), {
-  autoescape: true,
-  express: app,
-  noCache: true,
-});
+nunjucks.configure(
+    path.join(__dirname, "view"),
+    {
+        autoescape: true,
+        express: app,
+        noCache: true
+    }
+);
 
-// Disponibiliza os arquivos CSS, JS e imagens
-app.use(express.static(path.join(__dirname, "public")));
+// Arquivos CSS, JS e imagens.
+app.use(
+    express.static(
+        path.join(__dirname, "public")
+    )
+);
 
-// Disponibiliza os scripts dos módulos
-app.use("/apps", express.static(path.join(__dirname, "apps")));
+app.use(
+    "/apps",
+    express.static(
+        path.join(__dirname, "apps")
+    )
+);
 
-// Página inicial redireciona para o Login
+// Página inicial.
 app.get("/", (req, res) => {
-  res.redirect("/login");
+    res.redirect("/login");
 });
 
-// Página de Login
+// Login.
 app.get("/login", (req, res) => {
-  res.render("loginView.njk", {
-    backendUrl: servidorDw3,
-  });
+    res.render("loginView.njk", { backendUrl });
 });
 
-// Página principal
+// Painel.
 app.get("/home", (req, res) => {
-  res.render("home.njk", {
-    title: "Painel principal",
-    activeMenu: "home",
-    backendUrl: servidorDw3,
-  });
+    res.render("home.njk", {
+        title: "Painel",
+        activeMenu: "home",
+        backendUrl
+    });
 });
 
-app.listen(port, () => {
-  console.log(`Front-End rodando na porta ${port}`);
+// Páginas usadas pelos dois CRUDs.
+function paginas(modulo, singular) {
+
+    app.get("/" + modulo, (req, res) => {
+        res.render(modulo + ".njk", {
+            title: modulo,
+            activeMenu: modulo,
+            backendUrl
+        });
+    });
+
+    app.get("/" + modulo + "/novo", (req, res) => {
+        res.render(singular + "Form.njk", {
+            operacao: "novo",
+            id: "",
+            activeMenu: modulo,
+            backendUrl
+        });
+    });
+
+    app.get("/" + modulo + "/editar/:id", (req, res) => {
+        res.render(singular + "Form.njk", {
+            operacao: "editar",
+            id: req.params.id,
+            activeMenu: modulo,
+            backendUrl
+        });
+    });
+
+    app.get("/" + modulo + "/visualizar/:id", (req, res) => {
+        res.render(singular + "Form.njk", {
+            operacao: "visualizar",
+            id: req.params.id,
+            activeMenu: modulo,
+            backendUrl
+        });
+    });
+}
+
+paginas("medicos", "medico");
+paginas("consultas", "consulta");
+
+app.listen(port, "0.0.0.0", () => {
+    console.log(`Front-End na porta ${port}`);
 });
